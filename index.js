@@ -10,6 +10,7 @@ app.use(express.json());
 const productRoutes = require('./routes/productRoutes');
 
 app.use('/products', productRoutes);
+app.use('/search', searchRoutes);
 
 app.listen(port, ()=>{
     console.log(`Server is running on ${port}`);
