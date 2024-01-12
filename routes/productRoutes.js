@@ -37,4 +37,42 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Update a product
+router.put('/:productId', async (req, res) => {
+    try {
+      const productId = req.params.productId;
+      const { name, description, price, variants } = req.body || {};
+  
+      if (!name || !description || !price) {
+        return res.status(400).json({ error: 'Name, description, and price are required' });
+      }
+  
+      const product = await Product.findByIdAndUpdate(
+        productId,
+        { name, description, price },
+        { new: true }
+      );
+  
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+  
+      // Update variants
+      if (variants && variants.length > 0) {
+        const updatedVariants = await Variant.findByIdAndUpdate(
+          { _id: { $in: product.variants } },
+          { $set: { variants } },
+          { new: true, multi: true }
+        );
+        product.variants = updatedVariants.map((variant) => variant._id);
+        await product.save();
+      }
+  
+      res.json({ product, message: 'Product updated successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
 module.exports = router;

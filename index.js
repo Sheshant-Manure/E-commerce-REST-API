@@ -4,10 +4,12 @@ require('./database/MongoDB');
 
 require('dotenv').config();
 const port = process.env.PORT;
+app.use(express.json());
 
-app.get('/', (req, res)=>{
-    res.send('Ecommerce REST API');
-});
+// Routes
+const productRoutes = require('./routes/productRoutes');
+
+app.use('/products', productRoutes);
 
 app.listen(port, ()=>{
     console.log(`Server is running on ${port}`);
