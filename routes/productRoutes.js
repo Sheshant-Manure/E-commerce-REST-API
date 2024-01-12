@@ -75,4 +75,28 @@ router.put('/:productId', async (req, res) => {
     }
   });
   
+// Delete a product
+router.delete('/:productId', async (req, res) => {
+    try {
+      const productId = req.params.productId;
+  
+      const product = await Product.findById(productId);
+  
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+  
+      // Delete associated variants
+      await Variant.deleteMany({ _id: { $in: product.variants } });
+  
+      // Delete the product
+      await Product.findByIdAndDelete(productId);
+  
+      res.json({ message: 'Product deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
 module.exports = router;
