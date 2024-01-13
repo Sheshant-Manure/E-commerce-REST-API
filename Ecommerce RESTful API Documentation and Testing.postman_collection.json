@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "d3ba09df-1a02-4d07-be47-298023b7b8ed",
+		"name": "Ecommerce RESTful API Documentation and Testing",
+		"description": "This is a simple E-commerce REST API built using Node.js, Express, and MongoDB. The API allows you to perform CRUD operations on products and provides a search functionality for products by name, description, or variant name.\n\n## Table of Contents\n\n- [API Endpoints](https://github.com/Sheshant-Manure/E-commerce-REST-API#api-endpoints)\n- [Architectural Decisions](https://github.com/Sheshant-Manure/E-commerce-REST-API#architectural-decisions)\n- [Assumptions](https://github.com/Sheshant-Manure/E-commerce-REST-API#assumptions)\n    \n\n## API Endpoints\n\n- **POST /products**\n    - Create a new product and its variants.\n\n**Request Body:**\n\n```\nExplain    {\n    \"name\": \"Smartphone\",\n    \"description\": \"High-end smartphone with advanced features\",\n    \"price\": 899.99,\n    \"variants\": [\n        {\n        \"name\": \"64GB Storage\",\n        \"sku\": \"PHN-64GB\",\n        \"additionalCost\": 50.00,\n        \"stockCount\": 100\n        },\n        {\n        \"name\": \"128GB Storage\",\n        \"sku\": \"PHN-128GB\",\n        \"additionalCost\": 100.00,\n        \"stockCount\": 50\n        }\n    ]\n    }\n\n ```\n\n**GET /products**\n\n- Get all products with their variants.\n    \n\n**Response Body:**\n\n```\nExplain  [\n    {\n      \"id\": \"1\",\n      \"name\": \"Smartphone\",\n      \"description\": \"High-end smartphone with advanced features\",\n      \"price\": 899.99,\n      \"variants\": [\n        {\n          \"id\": \"101\",\n          \"name\": \"64GB Storage\",\n          \"sku\": \"PHN-64GB\",\n          \"additionalCost\": 50.00,\n          \"stockCount\": 100\n        },\n        {\n          \"id\": \"102\",\n          \"name\": \"128GB Storage\",\n          \"sku\": \"PHN-128GB\",\n          \"additionalCost\": 100.00,\n          \"stockCount\": 50\n        }\n      ]\n    },\n  ]\n\n ```\n\n- **PUT /products/:productId**\n    - Update a product.\n\n**Request Body:**\n\n```\n{\n\"name\": \"Updated Smartphone\",\n\"description\": \"Updated description\",\n\"price\": 999.99,\n\"variants\": [\n    {\n    \"name\": \"Updated Variant\",\n    \"sku\": \"UPD-VAR\",\n    \"additionalCost\": 20.00,\n    \"stockCount\": 50\n    }\n]\n}\n\n ```\n\n- **DELETE /products/:productId**\n    - Delete a product.\n\n**Request:**\n\n```\nDELETE /products/123\n\n ```\n\n### Search\n\n- **GET /products/search?q=search_query**\n    - Search products by name, description, or variant name.\n\n## Architectural Decisions\n\nThis project uses Node.js and Express for the server, MongoDB as the database, and Mongoose as the ODM (Object Document Mapper). The code is structured in a modular way, separating routes for product management and search functionality.\n\n## Assumptions\n\n- The MongoDB server is running on MongoDB Atlas server which the user has configured correctly.\n- The API assumes a basic structure for products and variants.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28191427"
+	},
+	"item": [
+		{
+			"name": "Get all products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Laptop\",\r\n  \"description\": \"High-performance laptop for professional use\",\r\n  \"price\": 1299.99,\r\n  \"variants\": [\r\n    {\r\n      \"name\": \"256GB SSD\",\r\n      \"sku\": \"LPT-256GB\",\r\n      \"additionalCost\": 100.00,\r\n      \"stockCount\": 50\r\n    },\r\n    {\r\n      \"name\": \"512GB SSD\",\r\n      \"sku\": \"LPT-512GB\",\r\n      \"additionalCost\": 150.00,\r\n      \"stockCount\": 30\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product/variant",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Updated Smartphone\",\r\n    \"description\": \"Updated description\",\r\n    \"price\": 999.99,\r\n    \"variants\": [\r\n        {\r\n            \"name\": \"Updated Variant\",\r\n            \"sku\": \"UPD-VAR\",\r\n            \"additionalCost\": 20.00,\r\n            \"stockCount\": 50\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products/65a181d75742cdfbc6352d25",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"65a181d75742cdfbc6352d25"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a product by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products/65a26bc54a5df021ed591353",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"65a26bc54a5df021ed591353"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/search?q=Updated%20Smartphone",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Updated%20Smartphone"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "test",
+			"script": {
+				"exec": [
+					"pm.test(\"Create a new product\", function () {\r",
+					"    pm.response.to.have.status(201);\r",
+					"    pm.response.to.have.jsonBody(\"message\", \"Product created successfully\");\r",
+					"    pm.response.to.have.jsonBody(\"product.name\", \"Smartphone\");\r",
+					"    pm.response.to.have.jsonBody(\"product.variants[0].name\", \"64GB Storage\");\r",
+					"    pm.response.to.have.jsonBody(\"product.variants[1].name\", \"128GB Storage\");\r",
+					"});\r",
+					"\r",
+					"pm.test(\"Get all products\", function () {\r",
+					"    pm.response.to.have.status(200);\r",
+					"    pm.response.to.have.jsonBody(\"length\", 1); // Assuming there is one product in the response\r",
+					"    pm.response.to.have.jsonBody(\"[0].name\", \"Smartphone\");\r",
+					"    pm.response.to.have.jsonBody(\"[0].variants[0].name\", \"64GB Storage\");\r",
+					"    pm.response.to.have.jsonBody(\"[0].variants[1].name\", \"128GB Storage\");\r",
+					"});\r",
+					"\r",
+					"pm.test(\"Update a product\", function () {\r",
+					"    pm.response.to.have.status(200);\r",
+					"    pm.response.to.have.jsonBody(\"message\", \"Product updated successfully\");\r",
+					"    pm.response.to.have.jsonBody(\"product.name\", \"Updated Smartphone\");\r",
+					"    pm.response.to.have.jsonBody(\"product.variants[0].name\", \"Updated Variant\");\r",
+					"});\r",
+					"\r",
+					"pm.test(\"Delete a product\", function () {\r",
+					"    pm.response.to.have.status(200);\r",
+					"    pm.response.to.have.jsonBody(\"message\", \"Product deleted successfully\");\r",
+					"});\r",
+					"\r",
+					"pm.test(\"Search products\", function () {\r",
+					"    pm.response.to.have.status(200);\r",
+					"    pm.response.to.have.jsonBody(\"length\", 1); // Assuming there is one product in the search result\r",
+					"    pm.response.to.have.jsonBody(\"[0].name\", \"Smartphone\");\r",
+					"});\r",
+					""
+				],
+				"type": "text/javascript"
+			}
+		}
+	]
+}
