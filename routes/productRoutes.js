@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
     const product = await Product.create({ name, description, price });
 
     // Create variants and associate them with the product
-    if (variants && variants.length > 0) {
+    if (variants.length > 0) {
       const createdVariants = await Variant.create(variants);
       product.variants = createdVariants.map((variant) => variant._id);
       await product.save();
@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
 router.put('/:productId', async (req, res) => {
   try {
     const productId = req.params.productId;
-    const { name, description, price, variants } = req.body || {};
+    const { name, description, price, variants } = req.body;
 
     // Validate input
     if (!name && !description && !price) {
